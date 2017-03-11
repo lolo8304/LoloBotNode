@@ -2,3 +2,4 @@
 /**/.vscode
 /**/*.VC.db
 /examples/**/package.json
+node_modules/
