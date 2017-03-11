@@ -22,8 +22,8 @@
     "mocha": "^2.4.5"
   },
   "scripts": {
-    "start1": "node ./examples/basics-waterfall/app.js",
-    "start": "node ./examples/basics-waterfall/app.js"
+    "start": "node ./app.js",
+    "start2": "node ./examples/basics-waterfall/app.js"
   }
 
 }
