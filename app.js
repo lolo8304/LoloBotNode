@@ -24,4 +24,5 @@ server.post('/api/messages', connector.listen());
 var bot = new builder.UniversalBot(connector, function (session) {
     console.log("message "+session.message.text+" arrived")
     session.send("You said: %s", session.message.text);
+    console.log("conversationData="+session.conversationData);
 });
