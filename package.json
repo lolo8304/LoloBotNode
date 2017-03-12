@@ -12,8 +12,8 @@
     "jsonwebtoken": "^7.1.9",
     "node-uuid": "^1.4.7",
     "promise": "^7.1.1",
-    "request": "^2.78.0",
-    "restify": "^4.2.0",
+    "request": "^2.81.0",
+    "restify": "^4.3.0",
     "rsa-pem-from-mod-exp": "^0.8.4",
     "sprintf-js": "^1.0.3",
     "url-join" : "^1.1.0"
@@ -22,8 +22,7 @@
     "mocha": "^2.4.5"
   },
   "scripts": {
-    "start": "node ./app.js",
-    "start2": "node ./examples/basics-waterfall/app.js"
+    "start": "node ./app.js"
   }
 
 }
