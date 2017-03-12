@@ -37,9 +37,11 @@ var bot = new builder.UniversalBot(connector, function (session) {
 */
 var bot = new builder.UniversalBot(connector, [
     function (session) {
+        console.log("message "+session.message.text+" arrived")
         builder.Prompts.text(session, "Hello... What's your name?");
     },
     function (session, results) {
+        console.log("message "+session.message.text+" arrived + results "+results.response);
         var name = results.response;
         session.send("Hi %s!", name);
     }
