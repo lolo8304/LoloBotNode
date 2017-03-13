@@ -104,13 +104,13 @@ dialog.matches('GetWeather', [
                 console.log(json);
             });
         } else {
-            sessin.endDialog("no answer withou location");
+            sessin.endDialog("No answer without location. Bye");
         }
     }
 ]);
 
 dialog.onDefault(
-    builder.DialogAction.endDialog("Sorry - I did not understand. Bye")
+    builder.DialogAction.send("Sorry - I did not understand. Try again")
 );
 
 
