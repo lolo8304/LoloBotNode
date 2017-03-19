@@ -40,39 +40,103 @@ bot.dialog('/', dialog);
 
 dialog.matches('builtin.intent.none', [
     function (session, args, next) {
-            session.send("Sorry - I did not get this");
+            session.send("Sorry - I did not get this. Try to say 'hello'");
     }
 ]);
+
+function matchDefaultResponse(session, response) {
+    if (response.toLowerCase() === "lolo") {
+        session.send("Welcome my friend. How can I help you?");
+        return true;
+    } else if (response.toLowerCase() == "hello") {
+        session.replaceDialog('Hello');
+        return true
+    }
+    return false
+}
+
 dialog.matches('Hello', [
     function (session, args, next) {
         builder.Prompts.text(session, "Welcome to Barcelona - my name is LoloBot and I am your assistant. Who are you?");
     },
     function (session, results) {
-        if (results.response && results.response.toLowerCase() === "lolo") {
-            session.send("Welcome my friend. How can I help you?");
-        } else {
-            session.send("Sorry - I only listen to Lolo");
-            builder.Prompts.text(session, "Try again?");
+        if (results.response && !matchDefaultResponse(session, results.response)) {
+            session.send("Sorry %s - I only listen to Lolo. Try again?", results.response);
         }
     },
     function (session, results) {
-        if (results.response && results.response.toLowerCase() === "lolo") {
-            session.send("Welcome my friend. How can I help you?");
-        } else {
-            session.endDialog("Sorry - my boss is Lolo. Goodbye");
+        if (results.response && !matchDefaultResponse(session, results.response)) {
+            session.replaceDialog("Sorry - my boss is Lolo. Goodbye");
         }
     }
 ]);
+
+function getFocusDaysData(builder, args, session) {
+        var intent = args.intent;
+        var whatIs = builder.EntityRecognizer.findEntity(args.entities, 'Question::What is');
+        var doYouKnow = builder.EntityRecognizer.findEntity(args.entities, 'Question::Do you know');
+        var focusdays = builder.EntityRecognizer.findEntity(args.entities, 'Question::FocusDays');
+        var winner = builder.EntityRecognizer.findEntity(args.entities, 'Question::Winner');
+        var hailbot = builder.EntityRecognizer.findEntity(args.entities, 'Question::Hailbot');
+        var object = {
+            intent: intent,
+            whatIs: whatIs,
+            doYouKnow: doYouKnow,
+            focusdays: focusdays,
+            winner: winner
+        };
+        if (winner) {
+            var answer = "Our winner was my friend the 'HailBot'";
+            if (doYouKnow) {
+                session.send("Yes of course! "+answer);
+            } else {
+                session.send(answer);
+            }
+        } else if (hailbot) {
+            var answer = "He is a claims bot and is there for our customers after a Hailstorm. For more details please ask my inventor Zeljko";
+            if (doYouKnow) {
+                session.send("Yes of course! "+answer);
+            } else {
+                session.send(answer);
+            }
+        } else {
+            var answer = "Focusdays is our internal Hackathon at AXA, 5th time this year";
+            if (doYouKnow) {
+                session.send("Yes of course! "+answer);
+            } else {
+                session.send(answer);
+            }
+        }
+}
+
+
+dialog.matches('TalkAboutFocusdays', [
+    function (session, args, next) {
+        getFocusDaysData(builder, args, session)
+    },
+    function (session, args, results) {
+        if (response && !matchDefaultResponse(session, response)) {
+            getFocusDaysData(builder, args, session)
+        }
+    },
+]);
+
+
 
 dialog.matches('GetWeather', [
     function (session, args, next) {
         // Resolve and store any entities passed from LUIS.
         var intent = args.intent;
         var cityName = builder.EntityRecognizer.findEntity(args.entities, 'builtin.geography.city');
+        var location_city = builder.EntityRecognizer.findEntity(args.entities, 'Location::city');
         var time = builder.EntityRecognizer.findEntity(args.entities, 'builtin.datetime.date');
         var temp = builder.EntityRecognizer.findEntity(args.entities, 'WeatherInfo::temp');
+
+        var location_current = builder.EntityRecognizer.findEntity(args.entities, 'Location::current');
+        var currentTime = builder.EntityRecognizer.findEntity(args.entities, 'builtin.datetime.time');
+
         var city = session.dialogData.city = {
-          name: cityName ? cityName.entity : "Barcelona",
+          name: cityName ? cityName.entity : (location_city ? location_city : "Barcelona"),
           date: time ? time.resolution.date : "2017-03-23",
           dateText: time ? time.entity : "today",
           type: temp ? "temperature" : "weather"
