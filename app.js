@@ -40,13 +40,13 @@ bot.dialog('/', dialog);
 
 dialog.matches('builtin.intent.none', [
     function (session, args, next) {
-            session.send("Sorry - I did not get this. Try to say 'hello'");
+            session.endDialog("Sorry - I did not get this. Try to say 'hello'");
     }
 ]);
 
 function matchDefaultResponse(session, response) {
     if (response.toLowerCase() === "lolo") {
-        session.send("Welcome my friend. How can I help you?");
+        session.endDialog("Welcome my friend. How can I help you?");
         return true;
     } else if (response.toLowerCase() == "hello") {
         session.replaceDialog('Hello');
@@ -61,12 +61,12 @@ dialog.matches('Hello', [
     },
     function (session, results) {
         if (results.response && !matchDefaultResponse(session, results.response)) {
-            session.send("Sorry %s - I only listen to Lolo. Try again?", results.response);
+            builder.Prompts.text(session, "Sorry "+results.response+" - I only listen to Lolo. Try again?");
         }
     },
     function (session, results) {
         if (results.response && !matchDefaultResponse(session, results.response)) {
-            session.replaceDialog("Sorry - my boss is Lolo. Goodbye");
+            session.endDialog("Sorry - my boss is Lolo. Goodbye");
         }
     }
 ]);
@@ -95,9 +95,9 @@ function getFocusDaysData(builder, args, session) {
         } else if (hailbot) {
             var answer = "He is a claims bot and is there for our customers after a Hailstorm. For more details please ask my inventor Zeljko";
             if (doYouKnow) {
-                session.send("Yes of course! "+answer);
+                session.endDialog("Yes of course! "+answer);
             } else {
-                session.send(answer);
+                session.endDialog(answer);
             }
         } else {
             var answer = "Focusdays is our internal Hackathon at AXA, 5th time this year";
@@ -136,7 +136,7 @@ dialog.matches('GetWeather', [
         var currentTime = builder.EntityRecognizer.findEntity(args.entities, 'builtin.datetime.time');
 
         var city = session.dialogData.city = {
-          name: cityName ? cityName.entity : (location_city ? location_city : "Barcelona"),
+          name: cityName ? cityName.entity : (location_city ? location_city.entity : "Barcelona"),
           date: time ? time.resolution.date : "2017-03-23",
           dateText: time ? time.entity : "today",
           type: temp ? "temperature" : "weather"
@@ -156,15 +156,20 @@ dialog.matches('GetWeather', [
         */
         if (city.name) {
             getWeather(city.name, function(cityName, error, json) {
-                var weather = json.weather[0];
-                var main = json.main;
-                var weatherText = "The temperature "+city.dateText+" is "+main.temp+"°C in "+city.name;
-                if (city.type == "temperature") {
-                    weatherText = "The temperature "+city.dateText+" is "+main.temp+"°C in "+city.name;
+                if (json.cod == 502) {
+                    session.send("No weather information for "+cityName);
                 } else {
-                    weatherText = "Weather forecast in "+city.name+" "+city.dateText+": "+weather.description+" ["+main.temp_min+"°C - "+main.temp_max+"°C ]";
+                    var weather = json.weather[0];
+                    var main = json.main;
+                    var cityNameCountry = json.name +"/"+json.sys.country
+                    var weatherText = "The temperature "+city.dateText+" is "+main.temp+"°C in "+cityNameCountry;
+                    if (city.type == "temperature") {
+                        weatherText = "The temperature "+city.dateText+" is "+main.temp+"°C in "+cityNameCountry;
+                    } else {
+                        weatherText = "Weather forecast in "+cityNameCountry+" for "+city.dateText+": "+weather.description+" ["+main.temp_min+"°C - "+main.temp_max+"°C ]";
+                    }
+                    session.endDialog(weatherText);
                 }
-                session.send(weatherText);
                 console.log(json);
             });
         } else {
