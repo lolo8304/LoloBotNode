@@ -171,16 +171,16 @@ function coverageInformation(object, coverageInfo) {
     result = coverage(coverageInfo, "liability", result);
     var text = "your **"+object+"** is ";
     if (result.covered != "") {
-        text = text + "\n- covered -> "+result.covered;
+        text = text + "\n- covered for: "+result.covered;
     }
     if (result.partially != "") {
-        text = text + "\n- partially covered -> "+result.partially;
+        text = text + "\n- partially covered for: "+result.partially;
     }
     if (result.notCovered != "") {
-        text = text + "\n- NOT covered -> "+result.notCovered;
+        text = text + "\n- NOT covered for: "+result.notCovered;
     }
     if (coverageInfo.deductible > 0) {
-        text = text + "\n\nwith a deductible = "+coverageInfo.deductible+" CHF";
+        text = text + "\n\nwith a deductible of "+coverageInfo.deductible+" CHF";
     }
     return text;
 }
