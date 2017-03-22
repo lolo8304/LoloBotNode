@@ -133,6 +133,76 @@ dialog.matches('Goodbye', [
 ]);
 
 
+function getCoverageQuestion(builder, args, session) {
+        var intent = args.intent;
+        var object = builder.EntityRecognizer.findEntity(args.entities, 'Insurance::objects');
+        return object ? object.entity.toLowerCase() : null;
+}
+function addElem(text, s) {
+    if (text == "") return s;
+    return text = text + ", "+s;
+}
+function coverage(coverageInfo, risk, result) {
+    if (coverageInfo[risk] == 1) {
+        result.covered = addElem(result.covered, risk);
+    }
+    if (coverageInfo[risk] == 0) {
+        result.partially = addElem(result.partially, risk);
+    }
+    if (coverageInfo[risk] == -1) {
+        result.notCovered = addElem(result.notCovered, risk);
+    }
+    return result;
+}
+
+function coverageInformation(object, coverageInfo) {
+    var result = {
+        covered: "",
+        notCovered: "",
+        partially: ""
+    };
+    result = coverage(coverageInfo, "fire", result);
+    result = coverage(coverageInfo, "robbery", result);
+    result = coverage(coverageInfo, "water", result);
+    result = coverage(coverageInfo, "theft", result);
+    result = coverage(coverageInfo, "damage", result);
+    result = coverage(coverageInfo, "glas", result);
+    result = coverage(coverageInfo, "collision", result);
+    result = coverage(coverageInfo, "liability", result);
+    var text = "your **"+object+"** is ";
+    if (result.covered != "") {
+        text = text + "\n- covered -> "+result.covered;
+    }
+    if (result.partially != "") {
+        text = text + "\n- partially covered -> "+result.partially;
+    }
+    if (result.notCovered != "") {
+        text = text + "\n- NOT covered -> "+result.notCovered;
+    }
+    if (coverageInfo.deductible > 0) {
+        text = text + "\n\nwith a deductible = "+coverageInfo.deductible+" CHF";
+    }
+    return text;
+}
+
+dialog.matches('AXASure-Coverage', [
+    function (session, args, next) {
+        var object = getCoverageQuestion(builder, args, session);
+        if (object == "ipad") {
+            session.endDialog(
+                coverageInformation(object, {fire: 1, robbery: 1, water: 1, theft: 0, damage: -1, glas: -1, deductible: 50}));
+        }
+        if (object == "ipad") {
+            session.endDialog(
+                coverageInformation(object, {fire: 1, robbery: 1, water: 1, theft: 0, damage: -1, glas: -1, deductible: 50}));
+        }
+        if (object == "car") {
+            session.endDialog(
+                coverageInformation(object, {fire: 1, robbery: 1, water: 1, theft: 1, collision: 1, glas: 0, liability: 1, deductible: 1000}));
+        }
+    }
+]);
+
 
 dialog.matches('GetWeather', [
     function (session, args, next) {
