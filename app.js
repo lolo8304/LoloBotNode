@@ -180,7 +180,7 @@ function coverageInformation(object, coverageInfo) {
         text = text + "\n- NOT covered for: "+result.notCovered;
     }
     if (coverageInfo.deductible > 0) {
-        text = text + "\n\nwith a deductible of "+coverageInfo.deductible+" CHF";
+        text = text + "\n\nwith a deductible of "+coverageInfo.deductible+" CHF.\nFor more details download AXA Sure";
     }
     return text;
 }
