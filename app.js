@@ -45,8 +45,8 @@ dialog.matches('builtin.intent.none', [
 ]);
 
 function matchDefaultResponse(session, response) {
-    if (response.toLowerCase() === "lolo") {
-        session.endDialog("Welcome my friend. How can I help you?");
+    if (response.toLowerCase() === "lolo" || response.toLowerCase() === "my name is low low"|| response.toLowerCase() === "my name is lolo") {
+        session.endDialog("Welcome my friend. How can I help you? Ask me somehing about the weather, coverage or focus days");
         return true;
     } else if (response.toLowerCase() == "hello") {
         session.replaceDialog('Hello');
