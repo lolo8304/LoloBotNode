@@ -192,9 +192,9 @@ dialog.matches('AXASure-Coverage', [
             session.endDialog(
                 coverageInformation(object, {fire: 1, robbery: 1, water: 1, theft: 0, damage: -1, glas: -1, deductible: 50}));
         }
-        if (object == "ipad") {
+        if (object == "iphone" || object == "smartphone" || object == "smartphone") {
             session.endDialog(
-                coverageInformation(object, {fire: 1, robbery: 1, water: 1, theft: 0, damage: -1, glas: -1, deductible: 50}));
+                coverageInformation(object, {fire: 1, robbery: 1, water: -1, theft: -1, damage: -1, glas: -1, deductible: 50}));
         }
         if (object == "car") {
             session.endDialog(
