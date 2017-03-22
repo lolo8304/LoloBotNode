@@ -200,6 +200,7 @@ dialog.matches('AXASure-Coverage', [
             session.endDialog(
                 coverageInformation(object, {fire: 1, robbery: 1, water: 1, theft: 1, collision: 1, glas: 0, liability: 1, deductible: 1000}));
         }
+        session.endDialog("I don't know - please download AXA Sure and test it");
     }
 ]);
 
