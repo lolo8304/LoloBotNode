@@ -120,6 +120,17 @@ dialog.matches('TalkAboutFocusdays', [
         }
     },
 ]);
+dialog.matches('ThankYou', [
+    function (session, args, next) {
+        session.endDialog("You are very welcome my friend! ");
+    },
+]);
+
+dialog.matches('Goodbye', [
+    function (session, args, next) {
+        session.endDialog("I wish everybody a nice AXA-Bot-Camp and invent more friends so I don't have to be alone anymore! Bye");
+    },
+]);
 
 
 
