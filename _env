@@ -1,0 +1,5 @@
+#add ID and password and LUIS URL here and rename to .env
+
+MICROSOFT_APP_ID=
+MICROSOFT_APP_PASSWORD=
+MICROSOFT_LUIS_MODEL=

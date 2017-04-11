@@ -5,16 +5,12 @@ A simple echo bot for the Microsoft Bot Framework.
 var builder = require('./core/');
 var restify = require('restify');
 var request = require('request');
+require('dotenv').config();
 
 
 // Setup Restify Server
 var server = restify.createServer();
-console.log("process.env.port="+process.env.port);
-console.log("process.env.PORT="+process.env.PORT);
-var port = process.env.port || process.env.PORT || 3978;
-console.log("port="+port);
-console.log("process.env.MICROSOFT_APP_ID="+process.env.MICROSOFT_APP_ID);
-console.log("process.env.MICROSOFT_APP_PASSWORD="+process.env.MICROSOFT_APP_PASSWORD);
+var port = process.env.port || process.env.PORT || 3977;
 
 server.listen(port, function () {
    console.log('%s listening to %s', server.name, server.url); 
@@ -29,10 +25,14 @@ var connector = new builder.ChatConnector({
 // Listen for messages from users 
 server.post('/api/messages', connector.listen());
 
-var bot = new builder.UniversalBot(connector);
+var bot = new builder.UniversalBot(connector, {
+  localizerSettings: { 
+        defaultLocale: "en" 
+    }
+});
 
 // Add global LUIS recognizer to bot
-var model = process.env.MICROSOFT_LUIS_MODEL || 'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/7fae536f-e15b-4dca-89eb-2c2fe7a42378?subscription-key=15eaad62ca2745f191d172bcab175a95&verbose=true&q=';
+var model = process.env.MICROSOFT_LUIS_MODEL;
 console.log('LUIS endpoint ', model); 
 var recognizer = new builder.LuisRecognizer(model);
 var dialog = new builder.IntentDialog({ recognizers: [recognizer] });
@@ -40,13 +40,13 @@ bot.dialog('/', dialog);
 
 dialog.matches('builtin.intent.none', [
     function (session, args, next) {
-            session.endDialog("Sorry - I did not get this. Try to say 'hello'");
+            session.endDialog("Sorry - I did'nt get this. Try again and say 'hello'");
     }
 ]);
 
 function matchDefaultResponse(session, response) {
     if (response.toLowerCase() === "lolo" || response.toLowerCase() === "my name is low low"|| response.toLowerCase() === "my name is lolo") {
-        session.endDialog("Welcome my friend. How can I help you?\n\nAsk me somehing about the \n- weather \n- coverage (is my ... covered) \n- focus days");
+        session.endDialog("$Intro.HelloMyFriend");
         return true;
     } else if (response.toLowerCase() == "hello") {
         session.replaceDialog('Hello');
@@ -57,16 +57,17 @@ function matchDefaultResponse(session, response) {
 
 dialog.matches('Hello', [
     function (session, args, next) {
-        builder.Prompts.text(session, "Welcome to Barcelona - my name is LoloBot and I am your assistant.\n\nWhat's your name?");
+        session.preferredLocale("en");
+        builder.Prompts.text(session, "$Intro.Welcome");
     },
     function (session, results) {
         if (results.response && !matchDefaultResponse(session, results.response)) {
-            builder.Prompts.text(session, "Sorry "+results.response+" - I only listen to Lolo. Try again?");
+            builder.Prompts.text(session, "$Intro.Sorry", results.response);
         }
     },
     function (session, results) {
         if (results.response && !matchDefaultResponse(session, results.response)) {
-            session.endDialog("Sorry - my boss is Lolo. Goodbye");
+            session.endDialog("$Intro.SorryGoodbye");
         }
     }
 ]);
@@ -86,14 +87,14 @@ function getFocusDaysData(builder, args, session) {
             winner: winner
         };
         if (winner) {
-            var answer = "Our winner was my friend the 'HailBot'";
+            var answer = "$Focusdays.Winner";
             if (doYouKnow) {
                 session.send("Yes of course! "+answer);
             } else {
                 session.send(answer);
             }
         } else if (hailbot) {
-            var answer = "He is a claims bot and is there for our customers after a Hailstorm. For more details please ask my inventor Zeljko";
+            var answer = "$Focusdays.HailbotDetails";
             if (doYouKnow) {
                 session.endDialog("Yes of course! "+answer);
             } else {
@@ -128,7 +129,7 @@ dialog.matches('ThankYou', [
 
 dialog.matches('Goodbye', [
     function (session, args, next) {
-        session.endDialog("I wish everybody a nice AXA-Bot-Camp and invent more friends so I don't have to be alone anymore! Bye");
+        session.endDialog("$Goodbye");
     },
 ]);
 
@@ -180,10 +181,16 @@ function coverageInformation(object, coverageInfo) {
         text = text + "\n- NOT covered for: "+result.notCovered;
     }
     if (coverageInfo.deductible > 0) {
-        text = text + "\n\nwith a deductible of "+coverageInfo.deductible+" CHF.\nFor more details download AXA Sure";
+        text = text + "\n\nwith a deductible of "+coverageInfo.deductible+" CHF.\n\nFor more details download AXA Sure mobile App";
     }
     return text;
 }
+
+dialog.matches('AXASure-Overview', [
+    function (session, args, next) {
+        session.endDialog("$AXASure.Overview");
+    }
+]);
 
 dialog.matches('AXASure-Coverage', [
     function (session, args, next) {
@@ -191,16 +198,15 @@ dialog.matches('AXASure-Coverage', [
         if (object == "ipad") {
             session.endDialog(
                 coverageInformation(object, {fire: 1, robbery: 1, water: 1, theft: 0, damage: -1, glas: -1, deductible: 50}));
-        }
-        if (object == "iphone" || object == "smartphone" || object == "smartphone") {
+        } else if (object == "iphone" || object == "smartphone" || object == "smartphone") {
             session.endDialog(
                 coverageInformation(object, {fire: 1, robbery: 1, water: -1, theft: -1, damage: -1, glas: -1, deductible: 50}));
-        }
-        if (object == "car") {
+        } else if (object == "car") {
             session.endDialog(
                 coverageInformation(object, {fire: 1, robbery: 1, water: 1, theft: 1, collision: 1, glas: 0, liability: 1, deductible: 1000}));
+        } else {
+            session.endDialog("I don't know - please download AXA Sure and test it");
         }
-        session.endDialog("I don't know - please download AXA Sure and test it");
     }
 ]);
 
