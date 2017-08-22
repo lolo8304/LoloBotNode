@@ -79,6 +79,7 @@ function getFocusDaysData(builder, args, session) {
         var focusdays = builder.EntityRecognizer.findEntity(args.entities, 'Question::FocusDays');
         var winner = builder.EntityRecognizer.findEntity(args.entities, 'Question::Winner');
         var hailbot = builder.EntityRecognizer.findEntity(args.entities, 'Question::Hailbot');
+        var emploji = builder.EntityRecognizer.findEntity(args.entities, 'Question::Emploji');
         var object = {
             intent: intent,
             whatIs: whatIs,
@@ -100,8 +101,15 @@ function getFocusDaysData(builder, args, session) {
             } else {
                 session.endDialog(answer);
             }
+        } else if (emploji) {
+            var answer = "$Focusdays.EmplojiDetails";
+            if (doYouKnow) {
+                session.endDialog("Yes of course! "+answer);
+            } else {
+                session.endDialog(answer);
+            }
         } else {
-            var answer = "Focusdays is our internal Hackathon at AXA, 5th time this year";
+            var answer = "$Focusdays.Intro";
             if (doYouKnow) {
                 session.send("Yes of course! "+answer);
             } else {
