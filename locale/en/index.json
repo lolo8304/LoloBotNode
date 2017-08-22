@@ -3,7 +3,7 @@
   "$Intro.HelloMyFriend":"Welcome my friend. How can I help you?\n\nAsk me somehing about the \n- weather or temperature \n- coverage of valuable objects\n- focus days",
   "$Intro.Sorry":"Sorry %s, but I only listen to Lolo. Try again?",
   "$Intro.SorryGoodbye":"Sorry - my boss is Lolo. Goodbye",
-  "$FocusDays.Intro":"Focusdays is our internal Hackathon at AXA, 5th time this year",
+  "$Focusdays.Intro":"Focusdays is our internal Hackathon at AXA, 5th time this year",
   "$Focusdays.Winner":"Our winner 2016 was my friend the 'HailBot' and 2017 was my colleague 'Emploji' from HR",
   "$Focusdays.HailbotDetails":"He is a claims bot and is there for our customers after a Hailstorm.\n\nIt will be our first chat bot in production for AXA Switzerland.\n\nSoon I will not be the only one at AXA.",
   "$Focusdays.EmplojiDetails":"My friend Emploji is an HR bot to optimize and speed up our HR processes. You can ask him questions about all HR reglements at AXA.",
