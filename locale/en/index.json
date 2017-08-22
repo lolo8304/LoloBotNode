@@ -4,9 +4,9 @@
   "$Intro.Sorry":"Sorry %s, but I only listen to Lolo. Try again?",
   "$Intro.SorryGoodbye":"Sorry - my boss is Lolo. Goodbye",
   "$Focusdays.Intro":"Focusdays is our internal Hackathon at AXA, 5th time this year",
-  "$Focusdays.Winner":"Our winner 2016 was my friend the 'HailBot' and 2017 was my colleague 'Emploji' from HR",
+  "$Focusdays.Winner":"Our winner 2016 was my friend the 'HailBot' and 2017 was my colleague 'Employji' from HR",
   "$Focusdays.HailbotDetails":"He is a claims bot and is there for our customers after a Hailstorm.\n\nIt will be our first chat bot in production for AXA Switzerland.\n\nSoon I will not be the only one at AXA.",
-  "$Focusdays.EmplojiDetails":"My friend Emploji is an HR bot to optimize and speed up our HR processes. You can ask him questions about all HR reglements at AXA.",
+  "$Focusdays.EmplojiDetails":"My friend Employji is an HR bot to optimize and speed up our HR processes. You can ask him questions about all HR rules at AXA.",
   "$Goodbye":"I wish everybody a nice Executive MBA module transformation and please invent more friends so I don't have to be alone anymore!\n\nAnd thanks to Reinhard inviting us\n\nBye",
   "$AXASure.Overview":"AXA Sure is an Innovation Award Winning App.\n\n Our customers are able to capture a valuable object at home and verify how it is covered in our house hold contracts.\n\n\nAXA Sure Beta version also has image recognition and a chat bot to create a claim - I love it.\n\nFor more details ask my inventor Lolo"
 }
