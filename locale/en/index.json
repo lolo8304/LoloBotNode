@@ -1,5 +1,5 @@
 {
-  "$Intro.Welcome": "Dear future Executives and attendees in MBA in Business Engineering - my name is LoloBot and I am your holographic assistant.\n\nWhat's your name?",
+  "$Intro.Welcome": "Dear future Executives and attendees of MBA in Business Engineering - my name is LoloBot and I am your holographic assistant.\n\nWhat's your name?",
   "$Intro.HelloMyFriend":"Welcome my friend. How can I help you?\n\nAsk me somehing about the \n- weather or temperature \n- coverage of valuable objects\n- focus days",
   "$Intro.Sorry":"Sorry %s, but I only listen to Lolo. Try again?",
   "$Intro.SorryGoodbye":"Sorry - my boss is Lolo. Goodbye",
