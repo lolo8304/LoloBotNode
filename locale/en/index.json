@@ -1,5 +1,5 @@
 {
-  "$Intro.Welcome": "Dear future Executives and attendees of MBA in Business Engineering - my name is LoloBot and I am your holographic assistant.\n\nWhat's your name?",
+  "$Intro.Welcome": "Dear CIO roundtable - my name is LoloBot and I am your holographic assistant for tonight.\n\nWhat's your name?",
   "$Intro.HelloMyFriend":"Welcome my friend. How can I help you?\n\nAsk me somehing about the \n- weather or temperature \n- coverage of valuable objects\n- focus days",
   "$Intro.Sorry":"Sorry %s, but I only listen to Lolo. Try again?",
   "$Intro.SorryGoodbye":"Sorry - my boss is Lolo. Goodbye",
@@ -7,6 +7,6 @@
   "$Focusdays.Winner":"Our winner 2016 was my friend the 'HailBot' and 2017 was my colleague 'Employji' from HR",
   "$Focusdays.HailbotDetails":"He is a claims bot and is there for our customers after a Hailstorm.\n\nIt will be our first chat bot in production for AXA Switzerland.\n\nSoon I will not be the only one at AXA.",
   "$Focusdays.EmplojiDetails":"My friend Employji is an HR bot to optimize and speed up our HR processes. You can ask him questions about all HR rules at AXA.",
-  "$Goodbye":"I wish everybody a nice Executive MBA module transformation and please invent more friends so I don't have to be alone anymore!\n\nAnd thanks to Reinhard inviting us\n\nBye",
-  "$AXASure.Overview":"AXA Sure is an Innovation Award Winning App.\n\n Our customers are able to capture a valuable object at home and verify how it is covered in our house hold contracts.\n\n\nAXA Sure Beta version also has image recognition and a chat bot to create a claim - I love it.\n\nFor more details ask my inventor Lolo"
+  "$Goodbye":"I wish everybody a nice CIO roundtable and please tell your developers to invent more friends so I don't have to be alone anymore!\n\nAnd thanks to Reinhard inviting us\n\nBye",
+  "$AXASure.Overview":"AXA Sure is an Innovation Award Winning App.\n\n Our customers are able to capture a valuable object at home and verify how it is covered in our house hold contracts.\n\n\nAXA Sure Beta version also has image recognition and a chat bot to create a claim  called Sara- I love it.\n\nFor more details ask my inventor Lolo"
 }
